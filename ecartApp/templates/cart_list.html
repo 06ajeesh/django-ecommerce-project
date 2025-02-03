@@ -1,0 +1,144 @@
+{% extends 'index.html' %}
+
+
+
+
+
+{% block header %}
+
+
+{% if cart_list.count == 0 %}
+<div>
+    <h1 class="h2 container rounded bg-dark text-white text-center py-5 mt-5"> Your Cart is Empty !!! </h1>
+</div>
+{% else %}
+<div></div>
+{% endif %}
+
+{% endblock %}
+
+
+
+{% block content%}
+
+{% for i in cart_list %}
+
+<div class="container row mt-5 justify-content-center">
+    <div class="col-0 col-md-2 text-center">
+        <p><i class="fa-solid fa-truck-arrow-right me-2"></i>{{ forloop.counter }}.</p>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <!-- Sale badge-->
+            <div class="badge bg-dark text-white position-absolute flex-grow-1" style="top: 0.5rem; right: 0.5rem">Sale
+            </div>
+            <!-- Product image-->
+            {% if i.product.image %}
+            <img class="card-img-top" src="{{i.product.image.url}}" alt="..." />
+            {% else %}
+            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+            {% endif %}
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{i.product.product_name}}</h5>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">{{i.product.product_name}}</h5>       
+                </div>
+                <!-- Product reviews-->
+                <div class="d-flex justify-content-center small text-warning mb-2">
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                </div>
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">${{i.product.price}}</span>
+                ${{i.product.price}}
+                <hr>
+                <p>
+                    Qty : {{i.quantity}}
+                </p>
+                <hr>
+                <div>
+
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#removeModal{{i.id}}">
+                        Remove
+                    </button>
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#orderModal{{i.id}}">
+                        Order
+                    </button>
+
+                    <!-- Modal remove -->
+                    <div class="modal fade" id="removeModal{{i.id}}" tabindex="-1" aria-labelledby="removeModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Remove item</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to remove <em>{{i.product.product_name}}</em> from cart?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+
+                                    <form action="{% url 'cart_item_delete_view' i.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal order -->
+                    <div class="modal fade" id="orderModal{{i.id}}" tabindex="-1" aria-labelledby="orderModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Order item</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    You are about to order <em>{{i.product.product_name}}</em>. Please confirm.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <a href="{% url 'cart_item_order_view' i.id %}" class="btn btn-success">Confirm</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

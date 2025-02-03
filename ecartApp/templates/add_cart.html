@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<div class="w-100 mt-5">
+    <div class="row justify-content-center align-items-start">
+        <div class="col-lg-6 col-md-8 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if product.image %}
+                <img class="card-img-top" src="{{product.image.url}}" alt="{{ product.product_name }}" />
+                {% else %}
+                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="No Image Available" />
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">{{ product.product_name }}</h5>
+                    <p class="card-text fs-5">${{ product.price }}</p>
+                    <hr>
+                    <p class="card-text">{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-8 mb-4 my-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Add to Cart</h5>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" name="form-submit" id="form-submit" class="btn btn-primary w-100">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

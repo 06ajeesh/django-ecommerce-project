@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column container">
+    <div class="text-center fw-bold h3">Register <span class="text-muted h5">here</span></div>
+    <div class="mt-2">
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary me-2">Register</button>
+                <a href="{% url 'login_user' %}" class="btn btn-outline-primary ms-2">Login</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
