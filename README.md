@@ -3,7 +3,7 @@
 
  This is a comprehensive e-commerce application built using Django, designed to provide an intuitive and seamless shopping experience for users. The eKart platform allows users to browse through a variety of products, add items to their cart, and complete their order.
 
-<img src="https://github.com/user-attachments/assets/82809644-5998-4295-b0b9-bca88f1caec6" width="85%" />
+<img src="https://github.com/user-attachments/assets/82809644-5998-4295-b0b9-bca88f1caec6" width="90%" />
 
 ## Features
 
@@ -47,8 +47,8 @@ Here are some screenshots from the application:
 To set up the project locally, follow these steps:
 
 
-### 1. Open Folder  
-Open a free folder for the project in command-line  
+### 1. Open Project Folder  
+**Open a free folder for the project in command-line**
 
 ### 2. Clone the Repository  
 Run the following command in your terminal:  
@@ -75,23 +75,46 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
+### 4. Adding environment for security 
+#### Create a .env file 
+**For Windows:**  
+```bash
+echo. > .env
+```
+**For macOS/Linux:**  
+```bash
+touch .env
+nano .env
+```
 
-### 4. Change Directory
+**Add Your Email And App Password to .env file for emailing**  
+eg: -- replace with actual one --
+```bash
+EMAIL_HOST_USER = 'example@gmail.com'
+EMAIL_HOST_PASSWORD = "abcd efgh ijkl mnop"
+```
+**Install dotenv module**  
+```bash
+pip install python-dotenv
+```
+
+
+### 5. Change Directory
 ```bash
 cd django-ecommerce-project
 ```
 
-### 5. Apply Database Migrations  
+### 6. Apply Database Migrations  
 ```bash
 python manage.py migrate
 ```
 
-### 6. Run the Development Server  
+### 7. Run the Development Server  
 ```bash
 python manage.py runserver
 ```
 
-### 7. Open the Application in Your Browser  
+### 8. Open the Application in Your Browser  
 ```
 http://127.0.0.1:8000/
 ```
