@@ -1,5 +1,6 @@
 import datetime
-
+from ecartApp.decorators import is_log_in
+from django.utils.decorators import method_decorator
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
@@ -87,6 +88,7 @@ class LogoutView(views.View):
 		return redirect('login_user')
 
 
+@method_decorator(is_log_in, name='dispatch')
 class CartView(views.View):
 	def get(Self, request, *args, **kwargs):
 		product = Product.objects.get(id=kwargs.get('id'))
@@ -111,6 +113,7 @@ class CartView(views.View):
 		return redirect('home')
 
 
+@method_decorator(is_log_in, name='dispatch')
 class CartListView(ListView):
 	model = Cart
 	template_name = 'cart_list.html'
@@ -120,6 +123,7 @@ class CartListView(ListView):
 		return Cart.objects.filter(user=self.request.user, status='in-cart')
 
 
+@method_decorator(is_log_in, name='dispatch')	
 class CartDeleteView(views.View):
 	def post(self, request, *args, **kwargs):
 		cart = Cart.objects.get(id=kwargs.get('id'))
@@ -128,7 +132,7 @@ class CartDeleteView(views.View):
 		messages.success(request, 'Product removed from cart')
 		return redirect('cart_list_view')
 
-
+@method_decorator(is_log_in, name='dispatch')
 class PlaceOrderView(TemplateView):
 	template_name = 'place_order.html'
 
@@ -165,7 +169,7 @@ Description 	: {cart.product.description}
 					
 Thank you for the order !!! 
 					'''
-		to_addr = 'njaanmass@gmail.com'
+		to_addr = email
 		confirmation = send_mail("Order confirmation", message, EMAIL_HOST_USER, [to_addr])
 		print(confirmation)
 		if confirmation == 1:
@@ -175,7 +179,7 @@ Thank you for the order !!!
 			messages.warning(request, "Error occurred during order placement")
 			return redirect('cart_list_view')
 
-
+@method_decorator(is_log_in, name='dispatch')
 class OrdersView(TemplateView):
 	template_name = 'order_list.html'
 
@@ -186,7 +190,7 @@ class OrdersView(TemplateView):
 		context['orders'] = orders
 		return context
 
-
+@method_decorator(is_log_in, name='dispatch')
 class OrderCancelView(DeleteView):
 	template_name = 'order_cancel.html'
 	pk_url_kwarg = 'id'
@@ -197,3 +201,4 @@ class OrderCancelView(DeleteView):
 		messages.success(self.request, 'Order Cancelling')
 		context = super().get_context_data(**kwargs)
 		return context
+

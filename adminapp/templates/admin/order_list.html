@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 d-flex flex-column justify-content-center">
-                                <p><strong>Status:</strong> {{ order.status }}</p>
+                                <p><strong>Status:</strong> <span class="text-success fw-bold text-capitalize">{{ order.status }}</span></p>
                                 <p><strong>Delivery to:</strong> {{ order.address }}</p>
                                 {% if order.user.first_name %}
                                 <p><strong>Order by:</strong> {{ order.user.first_name }}</p>
@@ -34,7 +34,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{% url 'admin_orders_update' %}" title="order_item"
+                    <a href="{% url 'admin_orders_update' order.id %}" title="order_item"
                         class="btn btn-danger w-75 mx-auto my-1">Update</a>
                     <div class="card-footer text-end">
                         <small class="text-muted">{{ order.created_at }}</small>

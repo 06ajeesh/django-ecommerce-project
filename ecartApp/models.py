@@ -41,7 +41,8 @@ class Order(models.Model):
 	address = models.TextField(max_length=250)
 	phone = models.PositiveBigIntegerField(default=1234657890)
 	options = [
-		('order-placed', 'order-placed'),
+        ('out-of-stock','out-of-stock'),
+        ('order-placed', 'order-placed'),
 		('cancelled', 'cancelled'),
 		('delivered', 'delivered'),
 		('dispatched', 'dispatched'),
